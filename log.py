@@ -223,7 +223,7 @@ def loginpage():
         image=button_register_2,
         borderwidth=0,
         highlightthickness=0,
-        command=user_register,
+        # command=user_register,
         relief="flat"
     )
     register.place(
