@@ -1,10 +1,10 @@
 import sys
-import maincsreen
-import main
+import pymysql
+import datetime
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from maincsreen import Ui_MainWindow
+from mainscreen import Ui_MainWindow
 from covid import Covid
-
+from calendar import Calendar
 
 class MyMainForm(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -16,11 +16,21 @@ class MyCovidForm(QMainWindow, Covid):
         super(MyCovidForm, self).__init__(parent)
         self.setupUi(self)
 
+class MyCalendarForm(QMainWindow, Calendar):
+    def __init__(self, parent=None):
+        super(MyCalendarForm, self).__init__(parent)
+        self.setupUi(self)
+
 if __name__ == "__main__":
     # s = MainWindow()
     app = QApplication(sys.argv)
     myWin = MyMainForm()
+    myWin.read_appointment()
     myWin.show()
-    s = MyCovidForm()
-    myWin.pushButton.clicked.connect(s.show)
+    covid = MyCovidForm()
+    calendar = MyCalendarForm()
+    myWin.pushButton.clicked.connect(covid.show)
+    covid.pushButton.clicked.connect(covid.close)
+    covid.pushButton.clicked.connect(calendar.show)
+    calendar.pushButton.clicked.connect(calendar.close)
     sys.exit(app.exec_())
