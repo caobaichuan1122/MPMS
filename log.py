@@ -4,10 +4,7 @@ import pymysql
 from pathlib import Path
 import tkinter.messagebox
 import sys
-import main
 import tkinter.font as tf
-# from tkinter import *
-# Explicit imports to satisfy Flake8
 from tkinter import *
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./image")
