@@ -314,26 +314,26 @@ class Book(object):
             cur.execute(sql)
             conn.commit()
             QtWidgets.QMessageBox.about(self, 'notification','Congratulations, the appointment is successful!')
-        else:
+        elif len(patient_info) == 3:
+            QtWidgets.QMessageBox.about(self, 'notification', 'Please select date and time!')
+        elif len(patient_info) == 2:
+            QtWidgets.QMessageBox.about(self, 'notification', 'Please select date and time!')
+        elif len(patient_info) == 1:
             sql = 'SELECT g.Id,g.Gname,COUNT(*) FROM GP g,GP_timetable gt where g.Id = gt.GP_Id group by g.Id;'
             cur1.execute(sql)
             total_app = cur1.fetchall()
             max_GP = max(total_app)
             sql = 'SELECT GP_Id, CAST(App_Date AS CHAR),CAST(App_Time AS CHAR) from GP_timetable where GP_Id = %s;'
-            cur1.execute(sql,max_GP[0])
+            cur1.execute(sql, max_GP[0])
             result = cur1.fetchall()
-            random.sample(result,1)
-            for i in random.sample(result,1)[0][1:4]:
+            random.sample(result, 1)
+            for i in random.sample(result, 1)[0][1:4]:
                 patient_info.append(i)
             print(patient_info)
-            QtWidgets.QMessageBox.about(self,'notification','If you do not select GP, date or time, the system will assign you the GP with the least appointment time.')
+            QtWidgets.QMessageBox.about(self, 'notification',
+                                        'If you do not select GP, date or time, the system will assign you the GP with the least appointment time.')
         cur.close()
         conn.close()
-    # def verify(self):
-    #     if len(self.patient_info) == 4:
-    #         self.pushButton_2.clicked.connect(self.save_info)
-    #     else:
-    #         print(4)
 
     def confirm(self):
         self.pushButton_2.clicked.connect(self.save_info)
