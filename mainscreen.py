@@ -9,10 +9,12 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QtCore.QSize(881, 628))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.Claendar = QtWidgets.QCalendarWidget(self.centralwidget)
-        self.Claendar.setGeometry(QtCore.QRect(310, 50, 511, 391))
-        self.Claendar.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
-        self.Claendar.setObjectName("Claendar")
+        # self.Claendar = QtWidgets.QCalendarWidget(self.centralwidget)
+        # self.Claendar.setGeometry(QtCore.QRect(310, 50, 511, 391))
+        # self.Claendar.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
+        # self.Claendar.setObjectName("Claendar")
+        # self.Claendar.setMinimumDate(QtCore.QDate(1900, 1, 1))
+        # self.Claendar.setMaximumDate(QtCore.QDate(2099, 12, 31))
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(50, 60, 201, 101))
         self.pushButton.setObjectName("pushButton")
@@ -23,15 +25,11 @@ class Ui_MainWindow(object):
         self.pushButton_3.setGeometry(QtCore.QRect(50, 350, 201, 101))
         self.pushButton_3.setObjectName("pushButton_3")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(310, 460, 511, 121))
+        self.tableWidget.setGeometry(QtCore.QRect(310, 50, 450, 471))
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(7)
-        self.tableWidget.setRowCount(10)
+        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setRowCount(50)
         item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(0, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(1, item)
-        # item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(1, item)
@@ -39,12 +37,6 @@ class Ui_MainWindow(object):
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(4, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(5, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(6, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 881, 23))
@@ -63,34 +55,27 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Make An Appointment"))
         self.pushButton_2.setText(_translate("MainWindow", "Cancel Appointment"))
         self.pushButton_3.setText(_translate("MainWindow", "Check in"))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Id"))
-        item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "App_Date"))
         item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "App_Time"))
+        item.setText(_translate("MainWindow", "App_Date"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "Check_in"))
-        item = self.tableWidget.horizontalHeaderItem(4)
-        item.setText(_translate("MainWindow", "GP_Id"))
-        item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("MainWindow", "Patient_Id"))
-        item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "Branch_Id"))
+        item.setText(_translate("MainWindow", "App_Time"))
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "Branch_Name"))
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "GP_Name"))
 
     def read_appointment(self):
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
-        sql = "SELECT Id,CAST(App_Date AS CHAR) AS App_Date,CAST(App_Time AS CHAR) AS App_Time,Check_in,GP_Id,Patient_Id,Branch_Id FROM Appointment;"
+        sql = "SELECT * FROM Patient_App_Info;"
         cur.execute(sql)
         data = cur.fetchall()
-        data_num = 0
-        data_row = 0
-        while data_num != 10:
-            if data_row != 7:
-                self.tableWidget.setItem(data_num,data_row,QtWidgets.QTableWidgetItem(str(data[data_num][data_row])))
-                data_row+= 1
-            else:
-                data_num += 1
-                data_row= 0
+        try:
+            for data_row in range(50):
+                for data_column in range(4):
+                    self.tableWidget.setItem(data_row, data_column, QtWidgets.QTableWidgetItem(str(data[data_row][data_column])))
+        except:
+            pass
+        cur.close()
+        conn.close()
