@@ -32,4 +32,5 @@ if __name__ == "__main__":
     myWin.pushButton.clicked.connect(covid.show)
     covid.pushButton.clicked.connect(covid.close)
     covid.pushButton.clicked.connect(book.show)
+    book.pushButton_3.clicked.connect(myWin.read_appointment)
     sys.exit(app.exec_())
