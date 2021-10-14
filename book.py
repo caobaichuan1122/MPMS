@@ -91,7 +91,7 @@ class Book(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Monash Patient Management System"))
         self.pushButton_3.setText(_translate("MainWindow", "Confirm"))
         self.pushButton_2.setText(_translate("MainWindow", "Select"))
         item = self.tableWidget_3.horizontalHeaderItem(0)
@@ -308,7 +308,6 @@ class Book(object):
                                charset='utf8')
         cur = conn.cursor()
         cur1 = conn.cursor()
-        cur2 = conn.cursor()
         if len(patient_info) == 4:
             sql = "INSERT INTO Patient_App_Info (Branch_Name, GP_Name, App_Date, App_Time) VALUES ('%s','%s','%s','%s')" % (
                     patient_info[0],patient_info[1],patient_info[2],patient_info[3])
@@ -320,17 +319,14 @@ class Book(object):
         elif len(patient_info) == 2:
             QtWidgets.QMessageBox.about(self, 'notification', 'Please select date and time!')
         elif len(patient_info) == 1:
-            sql = 'SELECT g.Id,g.Gname,COUNT(*) FROM GP g,GP_timetable gt where g.Id = gt.GP_Id group by g.Id;'
+            sql = 'SELECT g.Id,b.Branch_name,g.Gname,any_value(CAST(gt.App_Date AS CHAR)),any_value(CAST(gt.App_Time AS CHAR)) ' \
+                  'FROM GP g join GP_timetable gt join Branch b where g.Id = gt.GP_Id and b.Id = g.Branch_Id group by g.Id order by g.Id desc limit 1;'
             cur1.execute(sql)
             total_app = cur1.fetchall()
-            max_GP = max(total_app)
-            sql = 'SELECT GP_Id, CAST(App_Date AS CHAR),CAST(App_Time AS CHAR) from GP_timetable where GP_Id = %s;'
-            cur1.execute(sql, max_GP[0])
-            result = cur1.fetchall()
-            random.sample(result, 1)
-            for i in random.sample(result, 1)[0][1:4]:
-                patient_info.append(i)
-            print(patient_info)
+            sql = "INSERT INTO Patient_App_Info (Branch_Name, GP_Name, App_Date, App_Time) VALUES ('%s','%s','%s','%s')" % (
+                total_app[0][1], total_app[0][2], total_app[0][3], total_app[0][4])
+            cur1.execute(sql)
+            conn.commit()
             QtWidgets.QMessageBox.about(self, 'notification',
                                         'If you do not select GP, date or time, the system will assign you the GP with the least appointment time.')
         cur.close()
