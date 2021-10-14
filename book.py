@@ -212,9 +212,10 @@ class Book(object):
                     gp_app_date.append(i[1])
         except:
             pass
+        gp_app_date_set = list(set(gp_app_date))
         try:
             for i in range(500):
-                    self.tableWidget_6.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_date[i])))
+                    self.tableWidget_6.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_date_set[i])))
         except:
             pass
         cur.close()
@@ -225,15 +226,15 @@ class Book(object):
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
-        for i in self.tableWidget_4.selectedItems():
+        for i in self.tableWidget_6.selectedItems():
             double_click = i.text()
-        sql = 'select g.Gname,CAST(gt.App_Time AS CHAR) AS App_Time from GP_timetable gt,GP g where g.Id=gt.GP_Id;'
+        sql = 'select CAST(App_Date AS CHAR),CAST(App_Time AS CHAR) from GP_timetable;'
         cur.execute(sql)
         data_app = cur.fetchall()
         gp_app_time = []
         try:
             for i in data_app:
-                if i[0] == double_click:
+                if i[0] == str(double_click):
                     gp_app_time.append(i[1])
         except:
             pass
@@ -278,7 +279,7 @@ class Book(object):
         self.tableWidget_3.clicked.connect(self.button5)
         self.tableWidget_3.clicked.connect(self.button2)
         self.tableWidget_4.clicked.connect(self.button3)
-        self.tableWidget_4.clicked.connect(self.button4)
+        self.tableWidget_6.clicked.connect(self.button4)
         self.tableWidget_3.clicked.connect(self.app_info)
         self.tableWidget_4.clicked.connect(self.app_info)
         self.tableWidget_6.clicked.connect(self.app_info)
