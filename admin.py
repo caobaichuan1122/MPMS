@@ -1,6 +1,7 @@
 import pymysql
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+# this class is used to set the admin page
 class Admin(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
