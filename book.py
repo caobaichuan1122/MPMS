@@ -213,6 +213,7 @@ class Book(object):
         except:
             pass
         gp_app_date_set = list(set(gp_app_date))
+        gp_app_date_set.sort()
         try:
             for i in range(500):
                     self.tableWidget_6.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_date_set[i])))
@@ -238,9 +239,11 @@ class Book(object):
                     gp_app_time.append(i[1])
         except:
             pass
+        gp_app_time_set = list(set(gp_app_time))
+        gp_app_time_set.sort()
         try:
             for i in range(500):
-                        self.tableWidget_7.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_time[i])))
+                        self.tableWidget_7.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_time_set[i])))
         except:
             pass
         cur.close()
