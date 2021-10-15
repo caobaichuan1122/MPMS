@@ -1,7 +1,10 @@
 import pymysql
 import datetime
 
-
+'''
+This is the check in function
+patient could check in at the right time
+'''
 # timedelta to time
 def convert_timedelta(duration):
     days, seconds = duration.days, duration.seconds
@@ -13,6 +16,7 @@ def convert_timedelta(duration):
 
 # clear previous check_in record
 def clear_previous():
+    # connect the sql server
     conn = pymysql.connect(host='34.129.105.0',
                            user='Team27',
                            password='Team_27_yu',
@@ -21,6 +25,7 @@ def clear_previous():
                            charset='utf8')
     cursor = conn.cursor()
 
+    # set the right time rules of the check in function
     sql = " UPDATE `Appointment` SET `Check_in` = 0 WHERE `App_Date` = current_date() " \
           "AND `App_Time` < now() - interval 45 minute "
     cursor.execute(sql)
@@ -48,6 +53,7 @@ def print_queue():
           " people in front of you, please wait for our staff to call you.")
 
 
+# this function is used to verify the appointment
 def appointment_verify(app_id):
 
     clear_previous()
@@ -76,6 +82,7 @@ def appointment_verify(app_id):
         check_in = (now - date_time)
         diff = check_in.total_seconds() / 60
 
+        # if the check in time is less than 10 minutes
         if diff <= 10:
             cur.execute('UPDATE Appointment SET Check_In = 1 WHERE Appointment.Id = %s' % app_id)
             print_queue()
