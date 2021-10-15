@@ -3,7 +3,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from mainscreen import Ui_MainWindow
 from covid import Covid
 from book import Book
-
+'''
+this is used to control the main page of the system
+Integrate other functions of the system
+include MyMainForm; MyCovidForm; MyBookForm
+'''
 class MyMainForm(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(MyMainForm, self).__init__(parent)
@@ -19,6 +23,7 @@ class MyBookForm(QMainWindow, Book):
         super(MyBookForm, self).__init__(parent)
         self.setupUi(self)
 
+# define the structure
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myWin = MyMainForm()
