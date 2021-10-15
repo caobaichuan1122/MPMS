@@ -1,6 +1,7 @@
 import pymysql
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+# this class is used to define the main window
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -49,6 +50,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    # this function is used to re-translate the ui
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Monash Patient Management System"))
@@ -64,7 +66,9 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "GP_Name"))
 
+    # this function is used to read the appointment information
     def read_appointment(self):
+        # connect the sql server
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
