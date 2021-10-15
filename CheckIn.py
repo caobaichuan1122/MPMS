@@ -24,8 +24,8 @@ def clear_previous():
     sql = " UPDATE `Appointment` SET `Check_in` = 0 WHERE `App_Date` = current_date() " \
           "AND `App_Time` < now() - interval 45 minute "
     cursor.execute(sql)
-    sql_2 = "UPDATE `Appointment` SET `Check_in` = 0 WHERE `App_Date` < current_date()"
-    cursor.execute(sql_2)
+    cursor.execute('UPDATE Appointment SET Check_in = 0 WHERE App_Date < current_date()')
+    conn.commit()
 
 
 # print out queue
@@ -85,7 +85,8 @@ def appointment_verify(app_id):
 
 
 
-# appointment_verify(2)
+# appointment_verify(1)
+# clear_previous()
 # print_queue()
 
 
