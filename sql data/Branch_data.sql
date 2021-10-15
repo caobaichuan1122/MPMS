@@ -1,0 +1,3 @@
+INSERT INTO `team27`.`Branch` (`Id`, `Branch_name`, `Opening_hours`, `Phone`, `Street`, `Suburb`, `Postcode`) VALUES ('1', 'Melbourne city branch', 'Mon to Fri 08:00 - 16:00', '4001000', '100 Elizabeth Street', 'Melbourne', '3000');
+INSERT INTO `team27`.`Branch` (`Id`, `Branch_name`, `Opening_hours`, `Phone`, `Street`, `Suburb`, `Postcode`) VALUES ('2', 'North Melbourne branch', 'Mon to Fri 08:00 - 16:00', '4002000', '400 Queensberry Street', 'North Melbourne', '3051');
+INSERT INTO `team27`.`Branch` (`Id`, `Branch_name`, `Opening_hours`, `Phone`, `Street`, `Suburb`, `Postcode`) VALUES ('3', 'Clayton branch', 'Mon to Fri 08:00 - 16:00', '4003000', '246 Clayton Road', 'Clayton', '3168');
