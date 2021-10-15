@@ -23,6 +23,7 @@ class MyBookForm(QMainWindow, Book):
         super(MyBookForm, self).__init__(parent)
         self.setupUi(self)
 
+
 # define the structure
 if __name__ == "__main__":
     app = QApplication(sys.argv)
