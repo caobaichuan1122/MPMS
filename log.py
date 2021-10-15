@@ -9,9 +9,17 @@ from tkinter import *
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./image")
 
+'''
+this is used to define the login page include register function and log in function
+this is also the start of the whole program
+run from here
+'''
+
+# define the path route
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+# define the login page, set a global window, the title and the geometry
 def loginpage():
     global window
     window = Tk()
@@ -21,6 +29,7 @@ def loginpage():
     global user
     global pwd
 
+    # set the size of the window
     canvas = Canvas(
         bg = "#FFFFFF",
         height = 468,
@@ -39,6 +48,7 @@ def loginpage():
         image=image_image_1
     )
 
+    # set the login image
     entry_image_1 = PhotoImage(
         file=relative_to_assets("log/entry_1.png"))
     entry_bg_1 = canvas.create_image(
@@ -61,7 +71,7 @@ def loginpage():
 
     user.insert(0,'example@monash.edu')
 
-
+    # set the login image
     entry_image_2 = PhotoImage(
         file=relative_to_assets("log/entry_2.png"))
     entry_bg_2 = canvas.create_image(
@@ -83,6 +93,7 @@ def loginpage():
     )
     pwd.insert(0,'password:')
 
+    # define attribute of the login button
     button_login_1 = PhotoImage(
         file=relative_to_assets("log/button_1.png"))
     login = Button(
@@ -99,6 +110,7 @@ def loginpage():
         height=36.0
     )
 
+    # define attribute of the register button
     button_register_2 = PhotoImage(
         file=relative_to_assets("log/button_2.png"))
     register = Button(
@@ -125,6 +137,7 @@ def loginpage():
     window.resizable(False, False)
     window.mainloop()
 
+# define the function of the user_register
 def user_register():
     global register_screen
     register_screen = Toplevel(window)
@@ -149,6 +162,7 @@ def user_register():
     Label(register_screen, text="").pack()
     Button(register_screen, text="registration", width=10, height=1, bg="white", command=register_user).pack()
 
+# define the function of the login_verify
 def login_verify():
     username1 = user.get()
     password1 = pwd.get()
@@ -162,6 +176,7 @@ def login_verify():
     if result is None:
         tkinter.messagebox.showerror('error','username error!')
     else :
+        # if the password is correct, enter the home page, else show error reminder
         if result[0] == password1 and result[1] == username1:
             if result[1] == 'admin@monash.edu':
                 window.destroy()
@@ -174,15 +189,18 @@ def login_verify():
     cur.close()
     conn.close()
 
+# define a function which used to get the username and password from the database
 def register_user():
     username_info = username.get()
     password_info = password.get()
+    # connect the sql server
     conn = pymysql.connect(host='34.129.105.0', user='Team27', passwd='Team_27_yu', db='team27', port=3306, charset='utf8')
     cur = conn.cursor()
-
+    # this is used to get the account from the database
     select_sql = "select account from user WHERE password=%s"
     cur.execute(select_sql, [username_info])
     result = cur.fetchone()
+    # this function is used to insert the user account to the database
     if result is None:
         sql = 'insert into user(account,password)' \
               'values("%s","%s")' % \
