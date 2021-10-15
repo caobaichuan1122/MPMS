@@ -156,13 +156,17 @@ def login_verify():
     pwd.delete(0,'end')
     conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306, charset='utf8')
     cur = conn.cursor()
-    select_sql = "select password from user WHERE account=%s"
+    select_sql = "select password,account from user WHERE account=%s"
     cur.execute(select_sql,[username1])
     result = cur.fetchone()
     if result is None:
         tkinter.messagebox.showerror('error','username error!')
     else :
-        if result[0] == password1:
+        if result[0] == password1 and result[1] == username1:
+            if result[1] == 'admin@monash.edu':
+                window.destroy()
+                os.system("python admin_control.py")
+            else:
                 window.destroy()
                 os.system("python controller.py")
         elif result[0] != password1:
