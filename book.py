@@ -3,6 +3,9 @@ import random
 import pymysql
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+'''
+this function is used to make a appointment
+'''
 class Book(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -89,6 +92,7 @@ class Book(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    # this is used to re-translate the ui
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Monash Patient Management System"))
@@ -119,7 +123,9 @@ class Book(object):
         item = self.tableWidget_7.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Available Time"))
 
+    # this function is used to select the data
     def data_select(self):
+        # connect the sql server
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
@@ -128,6 +134,7 @@ class Book(object):
         data = cur.fetchall()
         data1 = []
         try:
+            # append the data to the data1
             for i in range(20):
                 data1.append(data[i][0])
         except:
@@ -142,10 +149,13 @@ class Book(object):
         cur.close()
         conn.close()
 
+    # this function is used to define the button which is used to select Branch_Name,Opening_hours,Phone,Street,Suburb,Postcode from Branch
     def button(self):
+        # connect the sql server
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
+        # use a for loop to check the items
         for i in self.tableWidget_3.selectedItems():
             double_click = i.text()
         sql = 'select Branch_Name,Opening_hours,Phone,Street,Suburb,Postcode from Branch; '
@@ -153,6 +163,7 @@ class Book(object):
         data_branch = cur.fetchall()
         Branch_inf = []
         try:
+            # store the branch info to the list
             for i in data_branch:
                 if i[0] == double_click:
                     Branch_inf.append(i)
@@ -167,12 +178,15 @@ class Book(object):
         cur.close()
         conn.close()
 
+    # this function is used to define the button2 which get and display the GP information
     def button2(self):
         self.tableWidget_6.clearContents()
         self.tableWidget_7.clearContents()
+        # connect the sql server
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
+        # use a for loop to check the items
         for i in self.tableWidget_3.selectedItems():
             double_click = i.text()
         sql = 'select Branch_Name,Gname from Branch b,GP g where b.Id=g.Branch_Id; '
@@ -180,6 +194,7 @@ class Book(object):
         data_GP = cur.fetchall()
         gp_name = []
         try:
+            # get and store the GP info
             for i in data_GP:
                 if i[0] == double_click:
                     gp_name.append(i[1])
@@ -195,6 +210,7 @@ class Book(object):
         cur.close()
         conn.close()
 
+    # this function is used to define the button2 which get and display the GP_timetable information
     def button3(self):
         self.tableWidget_6.clearContents()
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
@@ -213,6 +229,7 @@ class Book(object):
         except:
             pass
         gp_app_date_set = list(set(gp_app_date))
+        gp_app_date_set.sort()
         try:
             for i in range(500):
                     self.tableWidget_6.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_date_set[i])))
@@ -221,6 +238,7 @@ class Book(object):
         cur.close()
         conn.close()
 
+    # this function is used to define the button2 which get and display the available time of GP
     def button4(self):
         self.tableWidget_7.clearContents()
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
@@ -238,9 +256,11 @@ class Book(object):
                     gp_app_time.append(i[1])
         except:
             pass
+        gp_app_time_set = list(set(gp_app_time))
+        gp_app_time_set.sort()
         try:
             for i in range(500):
-                        self.tableWidget_7.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_time[i])))
+                        self.tableWidget_7.setItem(i,0, QtWidgets.QTableWidgetItem(str(gp_app_time_set[i])))
         except:
             pass
         cur.close()
@@ -302,6 +322,7 @@ class Book(object):
             self.patient_info.append(double_click3)
         return self.patient_info
 
+    # this function is used to save the info of user selected
     def save_info(self):
         patient_info = self.patient_info
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,

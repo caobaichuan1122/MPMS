@@ -1,6 +1,7 @@
 import pymysql
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+# this class is used to set the admin page
 class Admin(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -23,32 +24,6 @@ class Admin(object):
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(7)
         self.tableWidget.setRowCount(50)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(0, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(1, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(2, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(3, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(4, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(5, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(6, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(7, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(8, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(9, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(10, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(11, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(12, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -96,7 +71,9 @@ class Admin(object):
         item = self.tableWidget.horizontalHeaderItem(6)
         item.setText(_translate("MainWindow", "Branch_Name"))
 
+    # this function is used to define the total of the appointment
     def total_appointment(self):
+        # connect the sql server
         conn = pymysql.connect(host='34.129.105.0', user='Team27', password='Team_27_yu', db='team27', port=3306,
                                charset='utf8')
         cur = conn.cursor()
