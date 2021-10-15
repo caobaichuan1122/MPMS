@@ -86,7 +86,7 @@ class CheckIn(object):
         self.button.clicked.connect(self.appointment_verify(self))
 
 
-# appointment_verify(1)
+
 # clear_previous()
 # print_queue()
 
