@@ -7,16 +7,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Dashboard(object):
-    # def __init__(self, central_widget, push_button, table_widget1, table_widget2, table_widget3,
-    #              menu_bar, status_bar, double_click):
-    #     self.central_widget = central_widget
-    #     self.push_button = push_button
-    #     self.table_widget1 = table_widget1
-    #     self.table_widget2 = table_widget2
-    #     self.table_widget3 = table_widget3
-    #     self.menu_bar = menu_bar
-    #     self.status_bar = status_bar
-    #     self.double_click = double_click
 
     def set_ui(self, main_window):
         main_window.setObjectName("main_window")

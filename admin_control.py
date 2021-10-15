@@ -19,10 +19,10 @@ if __name__ == "__main__":
     # s = MainWindow()
     app = QApplication(sys.argv)
     myWin = MyMainForm()
-    dash = MyDashboadForm
+    myWin.show()
+    dash = MyDashboadForm()
     myWin.total_appointment()
     myWin.pushButton.clicked.connect(dash.show)
     dash.data_select()
     dash.double_click()
-    myWin.show()
     sys.exit(app.exec_())
